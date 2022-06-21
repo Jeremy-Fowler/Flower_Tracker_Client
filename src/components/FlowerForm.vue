@@ -29,20 +29,23 @@
           required
         />
       </div>
-      <div class="small-input">
+      <div class="medium-input">
         <label for="price" class="form-label fst-italic text-light"
           >Price...</label
         >
-        <input
-          type="number"
-          step="0.01"
-          min="0.01"
-          class="form-control"
-          id="price"
-          aria-describedby="flower-price"
-          v-model="editable.price"
-          required
-        />
+        <div class="input-group">
+          <span class="input-group-text">$</span>
+          <input
+            type="number"
+            step="0.01"
+            min="0.01"
+            class="form-control"
+            id="price"
+            aria-describedby="flower-price"
+            v-model="editable.price"
+            required
+          />
+        </div>
       </div>
     </div>
     <div class="d-flex justify-content-end mt-3">
@@ -87,5 +90,8 @@ label {
 }
 .small-input {
   width: 25%;
+}
+.medium-input {
+  width: 30%;
 }
 </style>

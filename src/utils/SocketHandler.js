@@ -17,7 +17,7 @@ export class SocketHandler {
   /**
    * @param {String} url
    */
-  constructor(requiresAuth = false, url = baseURL) {
+  constructor (requiresAuth = false, url = baseURL) {
     if (!useSockets) { return }
     this.socket = io(url || baseURL)
     this.requiresAuth = requiresAuth

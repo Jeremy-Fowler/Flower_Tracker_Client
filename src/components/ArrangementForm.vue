@@ -1,19 +1,22 @@
 <template>
   <form @submit.prevent="createArrangement">
     <div class="modal-body">
-      <div class="mb-3">
-        <label for="vase" class="form-label fst-italic">Vase Price...</label>
+      <label for="vase" class="form-label fst-italic">Vase Price...</label>
+      <div class="input-group mb-3">
+        <span class="input-group-text">$</span>
         <input
           type="number"
+          class="form-control"
           step="0.01"
           min="0.01"
-          class="form-control"
-          id="vase"
-          aria-describedby="vase-price"
+          aria-label="Amount (to the nearest dollar)"
           v-model="editable.vasePrice"
           required
+          id="vase"
+          aria-describedby="vase-price"
         />
       </div>
+
       <button
         class="btn btn-primary mb-3"
         type="button"
@@ -25,7 +28,9 @@
         Budget?
       </button>
       <div class="collapse" id="budget-input">
-        <div class="mb-3">
+        <div class="mb-3 input-group">
+          <span class="input-group-text">$</span>
+
           <input
             type="number"
             step="0.01"
