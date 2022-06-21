@@ -5,6 +5,8 @@
         <label for="vase" class="form-label fst-italic">Vase Price...</label>
         <input
           type="number"
+          step="0.01"
+          min="0.01"
           class="form-control"
           id="vase"
           aria-describedby="vase-price"
@@ -26,6 +28,7 @@
         <div class="mb-3">
           <input
             type="number"
+            step="0.01"
             class="form-control"
             id="budget"
             placeholder="Budget..."
@@ -57,6 +60,7 @@ export default {
       editable,
       createArrangement() {
         try {
+          arrangementsService.clear()
           arrangementsService.createArrangement(editable.value)
           editable.value = {}
           Modal.getOrCreateInstance('#arrangement-modal').hide()

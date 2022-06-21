@@ -4,34 +4,27 @@
       class="
         d-flex
         justify-content-between
-        fw-bold
         text-dark
         border-bottom border-dark
         sticky-top
-        mb-2
+        mx-1
+        mb-3
         fs-3
       "
     >
       <span>Total:</span>
       <span v-if="!arrangement.budget">$ {{ total }} </span>
       <span v-else>
-        <span :class="{ 'text-danger': total > arrangement.budget }">
-          $ {{ total }}</span
-        >
-        / $ {{ arrangement.budget }}
+        <span :class="{ 'text-danger': total < 0 }"> $ {{ total }}</span>
+        / $ {{ arrangement.budget.toFixed(2) }}
       </span>
     </div>
-    <div
-      v-for="f in flowers"
-      :key="f.id"
-      class="d-flex justify-content-between text-dark mb-2 fw-bold"
-    >
-      <span>{{ f.quantity }} {{ f.name }}:</span>
-      <span>$ {{ f.price * f.quantity }}</span>
-    </div>
-    <div class="d-flex justify-content-between text-dark mb-2 fw-bold">
-      <span>Vase:</span>
-      <span>$ {{ arrangement.vasePrice }}</span>
+    <div class="overflow">
+      <div class="d-flex justify-content-between text-dark mb-2 mx-1">
+        <span>Vase:</span>
+        <span>$ {{ arrangement.vasePrice.toFixed(2) }}</span>
+      </div>
+      <Flower v-for="f in flowers" :key="f.id" :flower="f" :total="total" />
     </div>
   </div>
 </template>
@@ -40,6 +33,9 @@
 <script>
 import { computed } from '@vue/reactivity'
 import { AppState } from '../AppState'
+import Pop from '../utils/Pop'
+import { logger } from '../utils/Logger'
+import { flowersService } from '../services/FlowersService'
 export default {
   props: {
     arrangement: {
@@ -49,14 +45,26 @@ export default {
   },
   setup(props) {
     return {
-      flowers: computed(() => AppState.flowers),
+      flowers: computed(() => AppState.flowers.sort((a, b) => {
+        return b.price - a.price
+      })),
       total: computed(() => {
         let price = 0
-        price += props.arrangement.vasePrice
-        AppState.flowers.forEach(p => {
-          price += p.price * p.quantity
-        })
-        return price
+        if (!props.arrangement.budget) {
+          price += props.arrangement.vasePrice
+          AppState.flowers.forEach(f => {
+            price += (f.price * f.quantity) / .75
+          })
+        }
+        else {
+          price = props.arrangement.budget
+          price -= props.arrangement.vasePrice
+          price *= .75
+          AppState.flowers.forEach(f => {
+            price -= (f.price * f.quantity)
+          })
+        }
+        return price.toFixed(2)
       })
     }
   }
@@ -66,10 +74,13 @@ export default {
 
 <style lang="scss" scoped>
 .grow {
-  height: 65vh;
+  height: 60vh;
+}
+.overflow {
+  height: 90%;
+  overflow: auto;
 }
 .bg-glass {
   background-color: #e9ecefbf;
-  backdrop-filter: blur(2px);
 }
 </style>

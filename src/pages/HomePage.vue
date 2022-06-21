@@ -1,22 +1,22 @@
 <template>
   <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-end">
+        <button
+          data-bs-toggle="modal"
+          data-bs-target="#arrangement-modal"
+          class="mt-3 me-2 btn btn-success border border-light text-light"
+        >
+          New Arrangement
+        </button>
+      </div>
+    </div>
     <div v-if="arrangement" class="row">
       <div class="col-12">
         <FlowerForm />
       </div>
       <div class="col-12 mt-4">
         <SaleStub :arrangement="arrangement" />
-      </div>
-    </div>
-    <div v-else class="row">
-      <div class="col-12 d-flex justify-content-end">
-        <button
-          data-bs-toggle="modal"
-          data-bs-target="#arrangement-modal"
-          class="m-3 btn btn-success border border-light text-light"
-        >
-          <i class="mdi mdi-plus fs-2"></i>
-        </button>
       </div>
     </div>
   </div>
