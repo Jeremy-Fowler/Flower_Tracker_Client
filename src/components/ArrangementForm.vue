@@ -16,17 +16,24 @@
           aria-describedby="vase-price"
         />
       </div>
-
-      <button
-        class="btn btn-primary mb-3"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#budget-input"
-        aria-expanded="false"
-        aria-controls="budget-input"
-      >
-        Budget?
-      </button>
+      <div class="d-flex justify-content-between">
+        <button
+          class="btn btn-primary mb-3"
+          type="button"
+          @click="toggleDropdown('#budget-input')"
+          aria-expanded="false"
+        >
+          Budget?
+        </button>
+        <button
+          class="btn btn-primary mb-3"
+          type="button"
+          @click="toggleDropdown('#labor-input')"
+          aria-expanded="false"
+        >
+          Adjust Labor?
+        </button>
+      </div>
       <div class="collapse" id="budget-input">
         <div class="mb-3 input-group">
           <span class="input-group-text">$</span>
@@ -39,6 +46,37 @@
             placeholder="Budget..."
             v-model="editable.budget"
           />
+        </div>
+      </div>
+      <div class="collapse" id="labor-input">
+        <div class="d-flex justify-content-between mb-3">
+          <button
+            type="button"
+            :class="`btn btn-${
+              editable.labor == 0.8 ? 'success' : 'outline-dark'
+            }`"
+            @click="adjustLabor(0.8)"
+          >
+            20%
+          </button>
+          <button
+            type="button"
+            :class="`btn btn-${
+              editable.labor == 0.75 ? 'success' : 'outline-dark'
+            }`"
+            @click="adjustLabor(0.75)"
+          >
+            25%
+          </button>
+          <button
+            type="button"
+            :class="`btn btn-${
+              editable.labor == 0.7 ? 'success' : 'outline-dark'
+            }`"
+            @click="adjustLabor(0.7)"
+          >
+            30%
+          </button>
         </div>
       </div>
     </div>
@@ -57,18 +95,39 @@ import { ref } from '@vue/reactivity'
 import Pop from '../utils/Pop'
 import { logger } from '../utils/Logger'
 import { arrangementsService } from '../services/ArrangementsService'
-import { Modal } from 'bootstrap'
+import { Collapse, Dropdown, Modal } from 'bootstrap'
 export default {
   setup() {
-    const editable = ref({ budget: null })
+    const editable = ref({ budget: null, labor: .75 })
     return {
       editable,
       createArrangement() {
         try {
           arrangementsService.clear()
           arrangementsService.createArrangement(editable.value)
-          editable.value = {}
+          editable.value = { budget: null, labor: .75 }
           Modal.getOrCreateInstance('#arrangement-modal').hide()
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error.message, 'error')
+        }
+      },
+      adjustLabor(percent) {
+        editable.value.labor = percent
+        logger.log(editable.value.labor)
+      },
+      toggleDropdown(id) {
+        try {
+          // Collapse.getOrCreateInstance(id)
+          const budgetElem = Collapse.getInstance('#budget-input')
+          if (budgetElem) {
+            budgetElem.hide()
+          }
+          const laborElem = Collapse.getInstance('#labor-input')
+          if (laborElem) {
+            laborElem.hide()
+          }
+          Collapse.getOrCreateInstance(id).toggle()
         } catch (error) {
           logger.error(error)
           Pop.toast(error.message, 'error')

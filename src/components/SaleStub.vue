@@ -53,13 +53,13 @@ export default {
         if (!props.arrangement.budget) {
           price += props.arrangement.vasePrice
           AppState.flowers.forEach(f => {
-            price += (f.price * f.quantity) / .75
+            price += (f.price * f.quantity) / props.arrangement.labor
           })
         }
         else {
           price = props.arrangement.budget
           price -= props.arrangement.vasePrice
-          price *= .75
+          price *= props.arrangement.labor
           AppState.flowers.forEach(f => {
             price -= (f.price * f.quantity)
           })
