@@ -4,52 +4,27 @@
       <label for="name" class="form-label fst-italic text-light">
         <div class="text-shadow">Flower Name...</div>
       </label>
-      <input
-        type="text"
-        class="form-control"
-        id="name"
-        aria-describedby="flower-name"
-        v-model="editable.name"
-        required
-      />
+      <input type="text" class="form-control" id="name" aria-describedby="flower-name" v-model="editable.name"
+        required />
     </div>
     <div class="mb-3 d-flex justify-content-between">
       <div class="small-input">
-        <label for="quantity" class="form-label fst-italic text-light"
-          >Quantity...</label
-        >
-        <input
-          type="number"
-          min="1"
-          class="form-control"
-          id="quantity"
-          step="0.01"
-          aria-describedby="flower-quantity"
-          v-model="editable.quantity"
-          required
-        />
+        <label for="quantity" class="form-label fst-italic text-light">Quantity...</label>
+        <input type="number" min="1" class="form-control" id="quantity" step="0.01" aria-describedby="flower-quantity"
+          v-model="editable.quantity" required />
       </div>
       <div class="medium-input">
-        <label for="price" class="form-label fst-italic text-light"
-          >Price...</label
-        >
+        <label for="price" class="form-label fst-italic text-light">Price...</label>
         <div class="input-group">
           <span class="input-group-text">$</span>
-          <input
-            type="number"
-            step="0.01"
-            min="0.01"
-            class="form-control"
-            id="price"
-            aria-describedby="flower-price"
-            v-model="editable.price"
-            required
-          />
+          <input type="number" step="0.01" min="0.01" class="form-control" id="price" aria-describedby="flower-price"
+            v-model="editable.price" required />
         </div>
       </div>
     </div>
     <div class="d-flex justify-content-end mt-3">
-      <button class="btn btn-success text-light border border-light fs-3">
+      <button class="btn btn-success text-light border border-light fs-3"
+        :title="`Add ${editable.name || 'flower'} to arrangement`">
         <i class="mdi mdi-plus"></i>
       </button>
     </div>
@@ -88,9 +63,11 @@ export default {
 label {
   text-shadow: 1px 1px 2px #000000;
 }
+
 .small-input {
   width: 25%;
 }
+
 .medium-input {
   width: 30%;
 }
