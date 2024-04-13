@@ -30,8 +30,7 @@ export default {
           12: 'https://images.unsplash.com/photo-1576491110962-e4acf3babe0c?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         }
 
-        // return `url(${backgrounds[new Date().getMonth() + 1]})`
-        return `url(${backgrounds[12]})`
+        return `url(${backgrounds[new Date().getMonth() + 1]})`
       }
     }
   }
