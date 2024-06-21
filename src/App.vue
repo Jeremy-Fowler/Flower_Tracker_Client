@@ -14,6 +14,9 @@ export default {
   setup() {
     return {
       appState: computed(() => AppState),
+      get randomPosition() {
+        return Math.floor(Math.random() * 101) + '%'
+      },
       get background() {
         const backgrounds = {
           1: 'https://images.unsplash.com/photo-1585049593555-70a36652e150?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -42,7 +45,7 @@ export default {
 main {
   background-image: v-bind(background);
   background-size: cover;
-  background-position: center;
+  background-position: v-bind(randomPosition);
 }
 
 * {

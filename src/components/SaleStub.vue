@@ -1,7 +1,6 @@
 <template>
   <div class="m-2 bg-glass border border-info rounded p-2 grow">
-    <div
-      class="
+    <div class="
         d-flex
         justify-content-between
         text-dark
@@ -10,8 +9,7 @@
         mx-1
         mb-3
         fs-3
-      "
-    >
+      ">
       <span>Total:</span>
       <span v-if="!arrangement.budget">$ {{ total }} </span>
       <span v-else>
@@ -45,9 +43,7 @@ export default {
   },
   setup(props) {
     return {
-      flowers: computed(() => AppState.flowers.sort((a, b) => {
-        return b.price - a.price
-      })),
+      flowers: computed(() => AppState.flowers),
       total: computed(() => {
         let price = 0
         if (!props.arrangement.budget) {
@@ -76,10 +72,12 @@ export default {
 .grow {
   height: 60vh;
 }
+
 .overflow {
   height: 90%;
   overflow: auto;
 }
+
 .bg-glass {
   background-color: #e9ecefbf;
 }

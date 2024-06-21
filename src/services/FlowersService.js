@@ -4,7 +4,7 @@ import { generateId } from "../utils/GenerateId"
 class FlowerService {
   create(data) {
     data.id = generateId()
-    AppState.flowers.unshift(data)
+    AppState.flowers.push(data)
   }
   remove(id) {
     AppState.flowers = AppState.flowers.filter(f => f.id !== id)
